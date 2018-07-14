@@ -1,3 +1,5 @@
+Used to forward requests from Slack bot to our application server, piercing our VPC.
+
 See Makefile for options.
 
 To deploy...
