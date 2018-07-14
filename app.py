@@ -11,7 +11,7 @@ from chalice import Chalice
 app = Chalice(app_name='lambda-traceback-slack-proxy')
 
 APP_SERVER_URL = os.getenv('APP_SERVER_URL')
-APP_CALLBACK_URL = APP_SERVER_URL + '/slack-callback'
+APP_CALLBACK_URL = '{}/slack-callback'.format(APP_SERVER_URL)
 
 
 @app.route('/slack-callback', methods=['POST'])
