@@ -2,10 +2,12 @@
     This endpoint is to redirect requests from Slack into our isolated Tracebacks VPC.
 """
 import os
+from urllib.parse import parse_qs
 
 import requests
 
 from chalice import Chalice
+
 
 
 app = Chalice(app_name='lambda-traceback-slack-proxy')
@@ -14,16 +16,25 @@ APP_SERVER_URL = os.getenv('APP_SERVER_URL')
 APP_CALLBACK_URL = '{}/slack-callback'.format(APP_SERVER_URL)
 
 
-@app.route('/slack-callback', methods=['POST'], cors=True)
+@app.route(
+    '/slack-callback',
+    methods=['POST'],
+    content_types=['application/x-www-form-urlencoded'],
+    cors=True
+)
 def slack_callback():
     """ redirect post requests from slack to our app server"""
+    print('starting lambda')
+
     # parse the request
     request = app.current_request
-    data = request.json_body
+    print('received request: %s' % request)
+    data = parse_qs(app.current_request.raw_body)
+    print('payload: %s' % data)
 
     # forward request to tracebacks server
     r = requests.post(APP_CALLBACK_URL, data=data)
-    print(r)
+    print('response from app server: %s' % r)
 
 
 # just for debugging
