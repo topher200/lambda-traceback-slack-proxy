@@ -10,7 +10,7 @@ from chalice import Chalice
 
 app = Chalice(app_name='lambda-traceback-slack-proxy')
 
-APP_SERVER_URL = os.environ('APP_SERVER_URL')
+APP_SERVER_URL = os.getenv('APP_SERVER_URL')
 APP_CALLBACK_URL = APP_SERVER_URL + '/slack-callback'
 
 
