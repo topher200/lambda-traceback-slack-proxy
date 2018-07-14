@@ -37,6 +37,7 @@ def slack_callback():
         # forward request to tracebacks server
         r = requests.post(APP_CALLBACK_URL, data=data)
         print('response from app server: %s' % r)
+        return r
     except Exception:
         traceback.print_exc()
         raise
