@@ -14,7 +14,7 @@ APP_SERVER_URL = os.getenv('APP_SERVER_URL')
 APP_CALLBACK_URL = '{}/slack-callback'.format(APP_SERVER_URL)
 
 
-@app.route('/slack-callback', methods=['POST'])
+@app.route('/slack-callback', methods=['POST'], cors=True)
 def slack_callback():
     """ redirect post requests from slack to our app server"""
     # parse the request
